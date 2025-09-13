@@ -13,6 +13,7 @@ from telegram.ext import (
 # توکن ربات از متغیرهای محیطی خوانده می‌شود
 TELEGRAM_API_TOKEN = os.environ.get('TELEGRAM_API_TOKEN')
 
+
 # فعال کردن لاگ‌گیری
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
