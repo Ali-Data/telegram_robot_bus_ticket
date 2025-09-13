@@ -60,6 +60,7 @@ def find_tickets(origin_name: str, destination_name: str, date_str: str):
                     f"⏰ ساعت حرکت: {ticket['departureTime']}\n"
                     f"💰 قیمت: {int(ticket['price'] / 10):,} تومان\n"
                     f"📍 ترمینال: {ticket['originTerminalPersianName']}\n"
+                    f"📍 نوع وسیله: {ticket['busType']}\n"
                     "--------------------\n"
                 )
             return result_message
