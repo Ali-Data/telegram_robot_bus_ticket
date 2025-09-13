@@ -11,7 +11,7 @@ def convert_persian_to_english_numerals(text: str) -> str:
 
 PERSIAN_TO_ENGLISH_CITIES = {
     "تهران": "tehran", "اصفهان": "isfahan", "شیراز": "shiraz",
-    "مشهد": "mashhad", "یزد": "yazd", "رشت": "rasht", "بابل": "babol",
+    "مشهد": "mashhad", "یزد": "yazd", "رشت": "rasht", "بابل": "babol", "ساری": "sari","آمل": "amol","قائمشهر": "ghaemshahr","همدان": "hamedan",
 }
 
 PERSIAN_MONTHS = {
