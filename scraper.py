@@ -13,7 +13,8 @@ PERSIAN_TO_ENGLISH_CITIES = {
     "تهران": "tehran", "اصفهان": "isfahan", "شیراز": "shiraz",
     "مشهد": "mashhad", "یزد": "yazd", "رشت": "rasht", "بابل": "babol",
     "ساری": "sari","آمل": "amol","قائمشهر": "qaemshahr",
-    "همدان": "hamadan","بابلسر":"babolsar"
+    "همدان": "hamadan","بابلسر":"babolsar","کاشان":"kashan",
+    "آران":"aranvabidgol","آران و بیدگل":"aranvabidgol","بیدگل":"aranvabidgol"
 }
 
 PERSIAN_MONTHS = {
