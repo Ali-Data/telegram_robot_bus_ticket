@@ -11,7 +11,9 @@ def convert_persian_to_english_numerals(text: str) -> str:
 
 PERSIAN_TO_ENGLISH_CITIES = {
     "تهران": "tehran", "اصفهان": "isfahan", "شیراز": "shiraz",
-    "مشهد": "mashhad", "یزد": "yazd", "رشت": "rasht", "بابل": "babol", "ساری": "sari","آمل": "amol","قائمشهر": "ghaemshahr","همدان": "hamedan",
+    "مشهد": "mashhad", "یزد": "yazd", "رشت": "rasht", "بابل": "babol",
+    "ساری": "sari","آمل": "amol","قائمشهر": "qaemshahr",
+    "همدان": "hamadan","بابلسر":"babolsar"
 }
 
 PERSIAN_MONTHS = {
@@ -60,7 +62,7 @@ def find_tickets(origin_name: str, destination_name: str, date_str: str):
                     f"⏰ ساعت حرکت: {ticket['departureTime']}\n"
                     f"💰 قیمت: {int(ticket['price'] / 10):,} تومان\n"
                     f"📍 ترمینال: {ticket['originTerminalPersianName']}\n"
-                    f"📍 نوع وسیله: {ticket['busType']}\n"
+                    f"نوع وسیله: {ticket['busType']}\n"
                     "--------------------\n"
                 )
             return result_message
