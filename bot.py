@@ -105,23 +105,24 @@ async def handle_natural_language_search(update: Update, context: ContextTypes.D
 from telegram.request import HTTPXRequest
 
 def main() -> None:
-    # --- بخش جدید: خواندن آدرس پروکسی از متغیرهای محیطی ---
     PROXY_URL = os.environ.get('PROXY_URL')
     
     if not TELEGRAM_API_TOKEN:
         print("خطا: توکن تلگرام تعریف نشده است!")
         return
         
-    # --- بخش جدید: ساخت آبجکت request با پروکسی ---
+    # --- تغییر اصلی و اصلاح شده اینجاست ---
     if PROXY_URL:
-        # اگر پروکسی تعریف شده بود، از آن استفاده کن
         print(f"در حال استفاده از پروکسی: {PROXY_URL}")
-        request = HTTPXRequest(proxy_url=PROXY_URL)
+        # پروکسی را در یک دیکشنری با کلید 'all://' قرار می‌دهیم
+        proxies = {'all://': PROXY_URL}
+        # دیکشنری را با پارامتر صحیح 'proxies' ارسال می‌کنیم
+        request = HTTPXRequest(proxies=proxies)
         application = Application.builder().token(TELEGRAM_API_TOKEN).request(request).build()
     else:
-        # اگر پروکسی تعریف نشده بود، به صورت عادی متصل شو
         print("بدون پروکسی متصل می‌شویم.")
         application = Application.builder().token(TELEGRAM_API_TOKEN).build()
+    # ------------------------------------------
     
     # بقیه کد بدون تغییر باقی می‌ماند
     application.add_handler(CommandHandler("start", start))
