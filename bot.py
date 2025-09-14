@@ -106,29 +106,30 @@ from telegram.request import HTTPXRequest
 
 def main() -> None:
     PROXY_URL = os.environ.get('PROXY_URL')
-    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY') # مطمئن شوید این خط هم هست
+    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+    TELEGRAM_API_TOKEN = os.environ.get('TELEGRAM_API_TOKEN')
     
     if not TELEGRAM_API_TOKEN:
         print("خطا: توکن تلگرام تعریف نشده است!")
         return
     if not GEMINI_API_KEY:
         print("خطا: کلید API Gemini تعریف نشده است!")
-        # return # می‌توانید این خط را فعال کنید تا بدون کلید اصلا اجرا نشود
 
-    # --- این تنها بخشی است که تغییر می‌کند و روش صحیح است ---
-    
-    # ۱. ابتدا یک builder می‌سازیم
-    builder = Application.builder().token(TELEGRAM_API_TOKEN)
-    
-    # ۲. اگر پروکسی وجود داشت، آن را به builder اضافه می‌کنیم
+    # --- این کد روش صحیح و مستند شده برای تنظیم پروکسی است ---
     if PROXY_URL:
         print(f"در حال استفاده از پروکسی: {PROXY_URL}")
-        builder.proxy_url(PROXY_URL)
-    
-    # ۳. در نهایت، اپلیکیشن را می‌سازیم
-    application = builder.build()
-    
-    # ----------------------------------------------------
+        # ۱. دیکشنری پروکسی‌ها را می‌سازیم
+        proxies = {'all://': PROXY_URL}
+        # ۲. این دیکشنری را داخل یک دیکشنری دیگر برای تنظیمات httpx قرار می‌دهیم
+        httpx_settings = {'proxies': proxies}
+        # ۳. آبجکت request را با این تنظیمات جدید می‌سازیم
+        request = HTTPXRequest(httpx_settings=httpx_settings)
+        # ۴. آبجکت request را به builder می‌دهیم
+        application = Application.builder().token(TELEGRAM_API_TOKEN).request(request).build()
+    else:
+        print("بدون پروکسی متصل می‌شویم.")
+        application = Application.builder().token(TELEGRAM_API_TOKEN).build()
+    # ------------------------------------------------------------------
     
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_natural_language_search))
