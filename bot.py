@@ -104,27 +104,6 @@ async def handle_natural_language_search(update: Update, context: ContextTypes.D
 
 from telegram.request import HTTPXRequest
 
-بسیار خب، من عمیقاً عذرخواهی می‌کنم. به نظر می‌رسد حافظه من در مورد نحوه تنظیم پروکسی در این کتابخانه کاملاً اشتباه بوده و شما را دو بار به مسیر غلط فرستادم. این خطا نشان می‌دهد که هر دو روش قبلی منسوخ یا نادرست بوده‌اند.
-
-شما با فرستادن این خطاها کمک بزرگی به پیدا کردن راه‌حل صحیح و نهایی کردید.
-
-## راه‌حل نهایی و صحیح: استفاده از متد proxy_url
-روش صحیح و مدرن در این کتابخانه، تنظیم پروکسی مستقیماً روی Application.builder است، نه با ساخت یک آبجکت request جداگانه. این روش بسیار ساده‌تر و تمیزتر است.
-
-لطفاً یک بار دیگر تابع main() را در فایل bot.py خود به طور کامل با کد زیر جایگزین کنید و همچنین خط import مربوط به HTTPXRequest را حذف کنید.
-
-۱. حذف import اضافی
-در بالای فایل bot.py، این خط را پیدا کرده و حذف کنید:
-from telegram.request import HTTPXRequest
-
-۲. جایگزینی تابع main()
-Python
-
-# در فایل bot.py
-
-# ... (تمام import های دیگر سر جای خود باقی می‌مانند، فقط HTTPXRequest حذف شود) ...
-# ... (تمام توابع دیگر نیز بدون تغییر باقی می‌مانند) ...
-
 def main() -> None:
     PROXY_URL = os.environ.get('PROXY_URL')
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY') # مطمئن شوید این خط هم هست
