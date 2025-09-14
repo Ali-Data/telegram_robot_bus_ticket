@@ -102,14 +102,28 @@ async def handle_natural_language_search(update: Update, context: ContextTypes.D
         logger.error(f"خطا در پردازش با Gemini یا جستجو: {e}")
         await update.message.reply_text("متاسفانه در پردازش درخواست شما خطایی رخ داد. لطفاً دوباره تلاش کنید.")
 
+from telegram.request import HTTPXRequest
+
 def main() -> None:
+    # --- بخش جدید: خواندن آدرس پروکسی از متغیرهای محیطی ---
+    PROXY_URL = os.environ.get('PROXY_URL')
+    
     if not TELEGRAM_API_TOKEN:
         print("خطا: توکن تلگرام تعریف نشده است!")
         return
         
-    application = Application.builder().token(TELEGRAM_API_TOKEN).build()
+    # --- بخش جدید: ساخت آبجکت request با پروکسی ---
+    if PROXY_URL:
+        # اگر پروکسی تعریف شده بود، از آن استفاده کن
+        print(f"در حال استفاده از پروکسی: {PROXY_URL}")
+        request = HTTPXRequest(proxy_url=PROXY_URL)
+        application = Application.builder().token(TELEGRAM_API_TOKEN).request(request).build()
+    else:
+        # اگر پروکسی تعریف نشده بود، به صورت عادی متصل شو
+        print("بدون پروکسی متصل می‌شویم.")
+        application = Application.builder().token(TELEGRAM_API_TOKEN).build()
     
-    # تعریف دستورها: فقط /start و یک Handler برای تمام پیام‌های متنی
+    # بقیه کد بدون تغییر باقی می‌ماند
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_natural_language_search))
 
